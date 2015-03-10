@@ -3,12 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>ソースコードエスケープ</title>
+  <link rel="stylesheet" href="stylesheets/style.css">
 </head>
 <body>
 
 <div id="before">
   <h1>変換前ソースコード</h1>
   <textarea name="before-src" id="before-src" cols="80" rows="20"></textarea>
+  <div>
+    <input type="checkbox" id="tab2space"><label for="tab2space">タブをスペースに変換</label>
+    スペースの数：<input type="text" maxlength="2" size="2" id="snum" value="4">
+  </div>
   <button id="convert">変換</button>
 </div>
 
