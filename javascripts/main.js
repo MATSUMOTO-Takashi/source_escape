@@ -4,4 +4,8 @@ $(function() {
     var output = $('<div/>').append($('<pre class="prettyprint linenums"/>').text(src)).html();
     $('#after-src').val(output);
   });
+
+  $('#after-src').on('focus', function() {
+    $(this).select();
+  });
 });
