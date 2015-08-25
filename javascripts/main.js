@@ -1,33 +1,38 @@
-$(function() {
-  /*
-   * タブを指定された数のスペースに変換する。
-   * @param text {String} - タブを含んだ文字列
-   * @param sNum {Number} - 置換するスペースの数
-   * @return {String} 置換した文字列
-   */
-  function tab2space(text, sNum) {
-    var s = Array(sNum + 1).join(' ');
-    return text.replace(/\t/g, s);
-  }
+(function() {
+'use strict';
 
-  /*
-   * 変換ボタンが押されたときに、入力されている文字列をHTMLエスケープした上で、preタグで括って出力します。
-   */
-  $('#convert').on('click', function() {
-    var src = $('#before-src').val();
-    var output = $('<div/>').append($('<pre class="prettyprint linenums"/>').text(src)).html();
+angular
+    .module('escape', [])
+    .controller('SrcEscapeController', function() {
+      this.spaceNum = 4;
+      this.convert = function() {
+        var output = angular.element('<div/>').append(angular.element('<pre class="prettyprint linenums"/>').text(this.beforeSrc)).html();
 
-    // スペースに変換するチェックボックスがOnならタブを変換する。
-    if ($('#tab2space').prop('checked')) {
-      output = tab2space(output, Number($('#snum').val()));
-    }
-    $('#after-src').val(output);
-  });
+        if (this.tab2space) {
+          output = tab2space(output, this.spaceNum);
+        }
+        this.afterSrc = output;
+      };
 
-  /*
-   * 変換後のテキストエリアにフォーカスされたときに、テキストを選択します。
-   */
-  $('#after-src').on('focus', function() {
-    $(this).select();
-  });
-});
+      /*
+       * タブを指定された数のスペースに変換する。
+       * @param text {String} - タブを含んだ文字列
+       * @param sNum {Number} - 置換するスペースの数
+       * @return {String} 置換した文字列
+       */
+      function tab2space(text, sNum) {
+        var s = new Array(sNum + 1).join(' ');
+        return text.replace(/\t/g, s);
+      }
+    })
+    .directive('tmClickSelect', function() {
+      return {
+        restrict: 'A',
+        link: function(scope, el) {
+          el.on('click', function(e) {
+            e.target.select();
+          });
+        }
+      };
+    });
+})();
