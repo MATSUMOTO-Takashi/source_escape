@@ -25,12 +25,14 @@ angular
         return text.replace(/\t/g, s);
       }
     })
-    .directive('tmClickSelect', function() {
+    .directive('tmClickSelect', function($timeout) {
       return {
         restrict: 'A',
         link: function(scope, el) {
           el.on('click', function(e) {
-            e.target.select();
+            $timeout(function() {
+              e.target.select();
+            });
           });
         }
       };
